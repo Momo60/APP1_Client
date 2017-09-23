@@ -28,6 +28,6 @@ namespace APP1_Client
 			    var msg = await stringTask;
 			    Console.Write(msg);
 
-		    }
+		   }
     }
 }
