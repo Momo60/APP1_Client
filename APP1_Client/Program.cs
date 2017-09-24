@@ -23,11 +23,13 @@ namespace APP1_Client
             static void Main(string[] args)
         {
          
+            Console.Write("Bienvenue sur notre site veuillez choisir le sondage auquel vous souhaitez répondre");
 
-            Console.Write("\nGET :");
+            Console.Write("\nGET :\n");
             GET().Wait();
 
-			Console.Write("POST :");
+
+			Console.Write("POST :\n");
 			POST().Wait();
 		}
 
@@ -36,12 +38,20 @@ namespace APP1_Client
 		
         static async Task POST()
         {
-         string apiUrl = "https://localhost:5001/api/sondage";
+            string question;
+            string numero;
+            string rep;
+            string apiUrl = "https://localhost:5001/api/sondage";
             var client = new HttpClient();
+
+            Console.Write("Veuillez choisir le questionnaire auquel vous souhaitez répondre\n");
+            question = Console.ReadLine();
+            Console.Write("Veuillez choisir la question à laquelle vous souhaitez répondre\n");
+            numero = Console.ReadLine();
             var values = new Dictionary<string, string>()
             {   
-                {"PollId", "1"},
-                {"CurrentQuestionId", "-1"},
+                {"PollId", question},
+                {"CurrentQuestionId", numero},
                 
             };
             var content = new FormUrlEncodedContent(values);
@@ -50,6 +60,9 @@ namespace APP1_Client
             var result = await response.Content.ReadAsStringAsync();
             response.EnsureSuccessStatusCode();
             Console.Write("\n"+result);
+			
+            Console.Write("Veuillez entrez votre réponse \n");
+            rep = Console.ReadLine();
 
 		}
 		
