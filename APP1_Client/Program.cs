@@ -76,6 +76,7 @@ namespace APP1_Client
 				{
 					clientGET.DefaultRequestHeaders.Accept.Clear();
 					clientGET.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                    clientGET.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2");
 
                     var stringContent = clientGET.GetStringAsync("https://localhost:5001/api/sondage");
 					var message = await stringContent;
