@@ -51,42 +51,6 @@ namespace APP1_Client
             response.EnsureSuccessStatusCode();
             Console.Write("\n"+result);
 
-
-
-			
-			
-            /*using (var clientHandler = new HttpClientHandler())
-            {
-	
-                using (var clientPOST = new HttpClient())
-                {
-					//HttpClient client1 = new HttpClient(clientHandler);
-                    clientPOST.BaseAddress = new Uri("https://localhost:5001/api/");
-					clientPOST.DefaultRequestHeaders.Accept.Clear();
-					clientPOST.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-					// HTTP POST
-                    var dataToBeSent = new ApiSendData()
-					{
-						PollId = 1,
-                        CurrentQuestionId = -1
-					};
-
-                    
-                    HttpResponseMessage response = await clientPOST.PostAsJsonAsync("sondage", dataToBeSent);
-
-
-					if (response.IsSuccessStatusCode)
-					{
-						// Get the URI of the created resource.
-						Uri ncrUrl = response.Headers.Location;
-
-                        // do whatever you need to do here with the returned data //
-                        Console.Write(response);
-
-					}
-                }
-            }*/
 		}
 		
   
