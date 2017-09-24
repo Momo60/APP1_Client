@@ -22,26 +22,40 @@ namespace APP1_Client
 			
             static void Main(string[] args)
         {
-            /*
-            Task T = new Task(Request_GET);
-			T.Start();
-			Console.WriteLine("Json data........");
-			Console.ReadLine();
-			*/
-
-            Console.Write("POST :");
-            POST().Wait();
+         
 
             Console.Write("\nGET :");
             GET().Wait();
+
+			Console.Write("POST :");
+			POST().Wait();
 		}
 
 
 
-
+		
         static async Task POST()
         {
-            using (var clientHandler = new HttpClientHandler())
+         string apiUrl = "https://localhost:5001/api/sondage";
+            var client = new HttpClient();
+            var values = new Dictionary<string, string>()
+            {   
+                {"PollId", "1"},
+                {"CurrentQuestionId", "-1"},
+                
+            };
+            var content = new FormUrlEncodedContent(values);
+
+            var response = await client.PostAsync(apiUrl, content);
+            var result = await response.Content.ReadAsStringAsync();
+            response.EnsureSuccessStatusCode();
+            Console.Write("\n"+result);
+
+
+
+			
+			
+            /*using (var clientHandler = new HttpClientHandler())
             {
 	
                 using (var clientPOST = new HttpClient())
@@ -72,9 +86,10 @@ namespace APP1_Client
 
 					}
                 }
-            }
-        }
-
+            }*/
+		}
+		
+  
 
 		static async Task GET()
 		{
@@ -91,6 +106,8 @@ namespace APP1_Client
 
 				
 				}
+
+
 			}
 		}
 	}
