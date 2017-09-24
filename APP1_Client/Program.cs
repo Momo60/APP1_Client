@@ -23,7 +23,7 @@ namespace APP1_Client
             static void Main(string[] args)
         {
          
-            Console.Write("Bienvenue sur notre site veuillez choisir le sondage auquel vous souhaitez répondre");
+            Console.Write("Bienvenue sur notre site ");
 
             Console.Write("\nGET :\n");
             GET().Wait();
@@ -38,31 +38,23 @@ namespace APP1_Client
 		
         static async Task POST()
         {
-            int sondageId;
-            string numero;
-            string rep;
+            string sondageId;
+           
+            string userId;
             string apiUrl = "https://localhost:5001/api/sondage";
             var client = new HttpClient();
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2");
+            Console.Write("veuillez renseigner votre Username\n");
+            userId= Console.ReadLine();
 
 			Console.Write("Choisir entre le questionnaire 1 et 2\n");
-			sondageId = Console.Read();
+			sondageId = Console.ReadLine();
 
-            //if (sondageId != 1 || sondageId != 2)
-			//{
-				//Console.Write("Choisir entre le questionnaire 1 et 2\n");
-				//sondageId = Console.Read();
-
-			//} 
-
-
-            Console.Write("Veuillez choisir la question à laquelle vous souhaitez répondre\n");
-            numero = Console.ReadLine();
             var values = new Dictionary<string, string>()
             {   
-                {"PollId", sondageId.ToString()},
-                {"CurrentQuestionId", numero},
+                {"PollId", sondageId},
+                {"CurrentQuestionId", "-1"},
                 
             };
             var content = new FormUrlEncodedContent(values);
@@ -72,8 +64,20 @@ namespace APP1_Client
             response.EnsureSuccessStatusCode();
             Console.Write("\n"+result);
 			
-            Console.Write("Veuillez entrez votre réponse \n");
-            rep = Console.ReadLine();
+            Console.Write("\nVeuillez entrez votre réponse \n");
+            var repo = Console.ReadLine();
+
+
+            var values2 = new Dictionary<string, string>()
+			{
+				{"userId", userId},
+				{"question", repo},
+
+			};
+            var content2 = new FormUrlEncodedContent(values2);
+            var sendAnswer = await client.PostAsync(apiUrl, content2);
+			var result2 = await response.Content.ReadAsStringAsync();
+			response.EnsureSuccessStatusCode();
 
 		}
 		
