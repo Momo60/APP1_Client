@@ -36,42 +36,14 @@ namespace APP1_Client
             GET().Wait();
 		}
 
-		/*		static async void Request_GET()
-				{
-					var r = await GETPage("https://localhost:5001/api/values");
-					Console.WriteLine(r.Substring(0, 50));
-				}
 
-		private HttpClientHandler AddCert(HttpClientHandler clientHandler, string certFilename)
-			{
-				var certPfx = new X509Certificate2(certFilename);
-				clientHandler.SslProtocols = SslProtocols.Tls12;
-				clientHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
-				clientHandler.ClientCertificates.Add(certPfx);
-
-				clientHandler.ServerCertificateCustomValidationCallback += 
-					(HttpRequestMessage req, X509Certificate2 cert2, X509Chain chain, SslPolicyErrors err) => { return true; };
-
-				return clientHandler;
-			}
-		*/
 
 
         static async Task POST()
         {
             using (var clientHandler = new HttpClientHandler())
             {
-	/*			var certPfx = new X509Certificate2("certificat.pfx");
-				clientHandler.SslProtocols = SslProtocols.Tls12;
-				clientHandler.ClientCertificateOptions = ClientCertificateOption.Manual;
-				clientHandler.ClientCertificates.Add(certPfx);
-
-				clientHandler.ServerCertificateCustomValidationCallback +=
-			(HttpRequestMessage req, X509Certificate2 cert2, X509Chain chain, SslPolicyErrors err) => { return true; };
-*/
-                /*C'est une faille de sécurité mais nous avons un certificat auto-signé alors qu'il en faudrait 1 signé*/
-                clientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-
+	
                 using (var clientPOST = new HttpClient())
                 {
 					//HttpClient client1 = new HttpClient(clientHandler);
