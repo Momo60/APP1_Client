@@ -11,23 +11,40 @@ namespace APP1_Client
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Bienvenue sur notre site, Veuillez choisir le sondage!");
-            ProcessRepositories().Wait();
-            Console.ReadKey();
+            Task T = new Task(Request_GET);
+			T.Start();
+			Console.WriteLine("Json data........");
+			Console.ReadLine();
 		}
 
-		
-			private static async Task ProcessRepositories()
-			{
-				var client = new HttpClient();
-				client.DefaultRequestHeaders.Accept.Clear();
-				client.DefaultRequestHeaders.Accept.Add(
-					new MediaTypeWithQualityHeaderValue("application/json"));
-				client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-                var stringTask = client.GetStringAsync("https://localhost:5001/api/values");
-			    var msg = await stringTask;
-			    Console.Write(msg);
+		static async void Request_GET()
+		{
+			var r = await GETPage("https://localhost:5001/api/values");
+			Console.WriteLine(r.Substring(0, 50));
+		}
 
-		   }
-    }
+		static async Task<string> GETPage(string url)
+		{
+			using (var client = new HttpClient())
+			{
+				using (var httpClientHandler = new HttpClientHandler())
+				{
+
+					/*C'est une faille de sécurité mais nous avons un certificat auto-signé alors qu'il en faudrait 1 signé*/
+					httpClientHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+
+                    client.BaseAddress = new Uri(url);
+					//HTTP GET
+					var responseTask = client.GetAsync("/5");
+					Console.Write(responseTask);
+					responseTask.Wait();
+
+                    string result = responseTask.Result.ToString();
+                    return result;
+				}
+
+			}
+
+		}
+	}
 }
