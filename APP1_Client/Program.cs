@@ -38,19 +38,30 @@ namespace APP1_Client
 		
         static async Task POST()
         {
-            string question;
+            int sondageId;
             string numero;
             string rep;
             string apiUrl = "https://localhost:5001/api/sondage";
             var client = new HttpClient();
 
-            Console.Write("Veuillez choisir le questionnaire auquel vous souhaitez répondre\n");
-            question = Console.ReadLine();
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2");
+
+			Console.Write("Choisir entre le questionnaire 1 et 2\n");
+			sondageId = Console.Read();
+
+            //if (sondageId != 1 || sondageId != 2)
+			//{
+				//Console.Write("Choisir entre le questionnaire 1 et 2\n");
+				//sondageId = Console.Read();
+
+			//} 
+
+
             Console.Write("Veuillez choisir la question à laquelle vous souhaitez répondre\n");
             numero = Console.ReadLine();
             var values = new Dictionary<string, string>()
             {   
-                {"PollId", question},
+                {"PollId", sondageId.ToString()},
                 {"CurrentQuestionId", numero},
                 
             };
