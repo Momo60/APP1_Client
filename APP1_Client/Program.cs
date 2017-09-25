@@ -10,13 +10,16 @@ namespace APP1_Client
     {
         static void Main(string[] args)
         {
-            Console.Write("Bienvenue sur notre sondage\n ");
+			try {
+				/*Récupération de descriptifs des sondages*/
+				GET().Wait();
 
-            /*Récupération de descriptifs des sondages*/
-            GET().Wait();
-
-            /*Envoie des données*/
-            POST().Wait();
+				/*Envoie des données*/
+                POST().Wait();
+			}
+			catch (System.AggregateException e) {
+			    Console.WriteLine("Serveur non lancé\n" + e.Message);
+			}
         }
 
         static async Task POST()
@@ -340,10 +343,10 @@ namespace APP1_Client
 
                     var stringContent = clientGET.GetStringAsync("https://localhost:5001/api/sondage");
 					var message = await stringContent;
+					Console.Write("Bienvenue sur notre sondage\n ");
                     Console.Write("\nVoici les sondages disponibles :\n" + message + "\n");
                     Console.Write(("\n"));
 				}
-
 			}
 		}
 	}
